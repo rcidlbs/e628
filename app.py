@@ -5,6 +5,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 import sqlite3
+import os
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -16,7 +17,7 @@ from dash import dcc, html, dash_table, Input, Output, State, callback_context
 import dash_bootstrap_components as dbc
 
 # ── 0. CONFIG ────────────────────────────────────────────────────────────────
-DB_PATH = r"C:\e628\data\sky-westminster-files.db"
+DB_PATH = os.path.join(os.path.dirname(__file__), "sky-westminster-files.db")
 
 # Party colours (from DB background hex field; overrides below for readability)
 # ── Inline logo data URIs (no external URLs needed) ──
@@ -908,6 +909,8 @@ def debug():
 
 
 # ── 6. RUN ────────────────────────────────────────────────────────────────────
+server = app.server  # needed for gunicorn on Render
+
 if __name__ == "__main__":
     import logging
     logging.basicConfig(level=logging.DEBUG)
